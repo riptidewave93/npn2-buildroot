@@ -1,0 +1,64 @@
+From 6b6ffca47d8b5c09de112288d72aa72a5c5642ea Mon Sep 17 00:00:00 2001
+From: Chris Blake <chrisrblake93@gmail.com>
+Date: Mon, 21 Aug 2017 14:26:26 -0500
+Subject: [PATCH] ARM: dts: sun50i: Fixup ethernet on the NanoPi Neo2
+
+This sets the correct MIDO address for ethernet to work within u-boot, as well
+as defines some things found upstream in the Linux 4.13 DTS.
+
+---
+ arch/arm/dts/sun50i-h5-nanopi-neo2.dts | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
+diff --git a/arch/arm/dts/sun50i-h5-nanopi-neo2.dts b/arch/arm/dts/sun50i-h5-nanopi-neo2.dts
+index c08af78..a4ba3d1 100644
+--- a/arch/arm/dts/sun50i-h5-nanopi-neo2.dts
++++ b/arch/arm/dts/sun50i-h5-nanopi-neo2.dts
+@@ -53,12 +53,17 @@
+
+ 	aliases {
+ 		serial0 = &uart0;
++		ethernet0 = &emac;
+ 	};
+
+ 	chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
+
++	memory {
++		reg = <0x40000000 0x40000000>;
++	};
++
+ 	reg_vcc3v3: vcc3v3 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vcc3v3";
+@@ -84,3 +89,27 @@
+ 	pinctrl-0 = <&uart0_pins_a>;
+ 	status = "okay";
+ };
++
++&usbphy {
++	status = "okay";
++};
++
++&ohci1 {
++	status = "okay";
++};
++
++&ehci1 {
++	status = "okay";
++};
++
++&emac {
++	pinctrl-names = "default";
++	pinctrl-0 = <&emac_rgmii_pins>;
++	phy-mode = "rgmii";
++	phy = <&phy1>;
++	status = "okay";
++
++	phy1: ethernet-phy@7 {
++		reg = <7>;
++	};
++};
+--
+2.7.4
