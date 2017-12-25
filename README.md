@@ -2,6 +2,8 @@
 
 Buildroot support for the FriendlyELEC NanoPi NEO2 Board.
 
+**WARNING:** This repo is no longer supported, as official support has been merged upstream as of commit [c7160a76c64e1454f9e5311a788242602b734223](https://github.com/buildroot/buildroot/commit/c7160a76c64e1454f9e5311a788242602b734223)
+
 ## Building
 
 In your Buildroot folder:
